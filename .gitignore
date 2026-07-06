@@ -1,0 +1,21 @@
+# Secrets — ne jamais committer les vrais fichiers d'environnement
+.env
+.env.*.local
+
+# Dépendances / builds
+node_modules/
+dist/
+build/
+
+# Sauvegardes de base de données
+backups/
+
+# Éditeurs / OS
+.DS_Store
+.vscode/
+*.log
+
+note.md
+
+# Config locale des outils (Claude Code, etc.)
+.claude/
