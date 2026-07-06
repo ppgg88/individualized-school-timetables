@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="/roville-logo.png" />
+    <title>EDT Individualisation</title>
+    <script>
+      (function () {
+        try {
+          // Pages publiques (élève / prof / vie scolaire) : toujours en thème clair, quel que
+          // soit le thème choisi côté panel admin ou la préférence système de l'appareil.
+          // Le thème sombre est réservé au panel admin (bascule dans Paramètres).
+          var isPublicPage = /^\/(eleve|prof|vie-scolaire)(\/|$)/.test(window.location.pathname);
+          if (isPublicPage) return;
+
+          var stored = localStorage.getItem('edt-theme');
+          var isDark = stored === 'dark' || (stored !== 'light' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+          if (isDark) document.documentElement.classList.add('dark');
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body class="bg-slate-50">
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

@@ -1,0 +1,144 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Palette neutre — mode clair (valeurs Tailwind slate standard) */
+    --color-white: 255 255 255;
+    --color-black: 0 0 0;
+    --color-slate-50: 248 250 252;
+    --color-slate-100: 241 245 249;
+    --color-slate-200: 226 232 240;
+    --color-slate-300: 203 213 225;
+    --color-slate-400: 148 163 184;
+    --color-slate-500: 100 116 139;
+    --color-slate-600: 71 85 105;
+    --color-slate-700: 51 65 85;
+    --color-slate-800: 30 41 59;
+    --color-slate-900: 15 23 42;
+    --color-slate-950: 2 6 23;
+  }
+
+  .dark {
+    /* Palette neutre — mode sombre : mêmes jetons, luminosité inversée */
+    --color-white: 30 41 59;     /* cartes */
+    --color-black: 255 255 255;
+    --color-slate-50: 15 23 42;  /* fond de page */
+    --color-slate-100: 51 65 85; /* séparateurs discrets */
+    --color-slate-200: 71 85 105; /* bordures */
+    --color-slate-300: 100 116 139; /* bordures marquées */
+    --color-slate-400: 148 163 184; /* icônes / placeholders */
+    --color-slate-500: 203 213 225; /* texte discret */
+    --color-slate-600: 226 232 240; /* texte secondaire */
+    --color-slate-700: 241 245 249; /* texte secondaire fort */
+    --color-slate-800: 248 250 252; /* titres */
+    --color-slate-900: 255 255 255; /* texte principal */
+    --color-slate-950: 255 255 255;
+  }
+
+  body {
+    @apply bg-slate-50 text-slate-900 antialiased transition-colors duration-150;
+  }
+
+  #root {
+    @apply min-h-screen;
+  }
+
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: rgb(148 163 184) transparent;
+  }
+}
+
+.dark .shadow-soft {
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+}
+
+/* ─── Styles d'impression ──────────────────────────────────────────────── */
+@media print {
+  @page {
+    size: A4 landscape;
+    margin: 1cm;
+  }
+
+  /* L'impression reste toujours en mode clair, quel que soit le thème choisi à l'écran :
+     on force la palette claire même si <html> porte la classe .dark. */
+  :root,
+  .dark {
+    --color-white: 255 255 255;
+    --color-black: 0 0 0;
+    --color-slate-50: 248 250 252;
+    --color-slate-100: 241 245 249;
+    --color-slate-200: 226 232 240;
+    --color-slate-300: 203 213 225;
+    --color-slate-400: 148 163 184;
+    --color-slate-500: 100 116 139;
+    --color-slate-600: 71 85 105;
+    --color-slate-700: 51 65 85;
+    --color-slate-800: 30 41 59;
+    --color-slate-900: 15 23 42;
+    --color-slate-950: 2 6 23;
+  }
+
+  .shadow-soft {
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08) !important;
+  }
+
+  body {
+    background: white !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Cacher le sidebar, le header et tous les éléments marqués no-print */
+  #app-sidebar,
+  #app-header,
+  .no-print {
+    display: none !important;
+  }
+
+  /* Le layout grid devient block pour que le contenu prenne toute la largeur */
+  #root > * {
+    display: block !important;
+    grid-template-columns: none !important;
+  }
+
+  /* La colonne de contenu prend toute la largeur */
+  #root > * > div {
+    display: block !important;
+    min-height: unset !important;
+  }
+
+  /* Reset du fond */
+  main {
+    background: white !important;
+    padding: 0 !important;
+  }
+
+  /* Sauts de page entre chaque fiche élève */
+  .print-page {
+    page-break-before: always;
+    break-before: always;
+  }
+
+  .print-page:first-child {
+    page-break-before: auto;
+    break-before: auto;
+  }
+
+  /* Éviter les coupures à l'intérieur d'un tableau */
+  thead {
+    display: table-header-group;
+  }
+
+  tr {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+}
